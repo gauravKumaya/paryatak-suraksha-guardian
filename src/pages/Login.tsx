@@ -1,11 +1,87 @@
 import { Shield, User, UserCheck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleTravelerLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get('travelerEmail') as string;
+    const password = formData.get('travelerPassword') as string;
+
+    // Basic validation
+    if (!email || !password) {
+      toast({
+        title: "Login Failed",
+        description: "Please enter both email and password.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Simulate authentication (replace with actual auth logic)
+    if (email && password.length >= 6) {
+      toast({
+        title: "Login Successful",
+        description: "Welcome back! Redirecting to your dashboard...",
+      });
+      
+      // Navigate to traveler dashboard after a short delay
+      setTimeout(() => {
+        navigate('/traveler-dashboard');
+      }, 1000);
+    } else {
+      toast({
+        title: "Login Failed",
+        description: "Invalid email or password. Please check your credentials.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleAuthorityLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get('authorityEmail') as string;
+    const password = formData.get('authorityPassword') as string;
+
+    // Basic validation
+    if (!email || !password) {
+      toast({
+        title: "Login Failed",
+        description: "Please enter both email and password.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Simulate authentication (replace with actual auth logic)
+    if (email && password.length >= 6) {
+      toast({
+        title: "Access Granted",
+        description: "Welcome to the control panel. Redirecting...",
+      });
+      
+      // Navigate to authority dashboard after a short delay
+      setTimeout(() => {
+        navigate('/authority-dashboard');
+      }, 1000);
+    } else {
+      toast({
+        title: "Access Denied",
+        description: "Invalid credentials. Please verify your authority account.",
+        variant: "destructive"
+      });
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-muted/30 to-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md trust-card border-0">
@@ -36,11 +112,12 @@ const Login = () => {
             </TabsList>
 
             <TabsContent value="traveler">
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleTravelerLogin}>
                 <div className="space-y-2">
                   <Label htmlFor="travelerEmail">Email Address</Label>
                   <Input
                     id="travelerEmail"
+                    name="travelerEmail"
                     type="email"
                     placeholder="your@email.com"
                     required
@@ -52,6 +129,7 @@ const Login = () => {
                   <Label htmlFor="travelerPassword">Password</Label>
                   <Input
                     id="travelerPassword"
+                    name="travelerPassword"
                     type="password"
                     placeholder="Enter your password"
                     required
@@ -69,18 +147,22 @@ const Login = () => {
                   </a>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-glow text-accent-foreground safety-glow">
+                <Button 
+                  type="submit"
+                  className="w-full bg-accent hover:bg-accent-glow text-accent-foreground safety-glow"
+                >
                   Login to Dashboard
                 </Button>
               </form>
             </TabsContent>
 
             <TabsContent value="authority">
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleAuthorityLogin}>
                 <div className="space-y-2">
                   <Label htmlFor="authorityEmail">Official Email</Label>
                   <Input
                     id="authorityEmail"
+                    name="authorityEmail"
                     type="email"
                     placeholder="official@department.gov.in"
                     required
@@ -92,6 +174,7 @@ const Login = () => {
                   <Label htmlFor="authorityPassword">Password</Label>
                   <Input
                     id="authorityPassword"
+                    name="authorityPassword"
                     type="password"
                     placeholder="Enter your password"
                     required
@@ -109,7 +192,10 @@ const Login = () => {
                   </a>
                 </div>
 
-                <Button className="w-full bg-primary hover:bg-primary-glow text-primary-foreground trust-shadow">
+                <Button 
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary-glow text-primary-foreground trust-shadow"
+                >
                   Access Control Panel
                 </Button>
               </form>
