@@ -1,6 +1,7 @@
-import { Shield, MapPin, Navigation, AlertCircle } from "lucide-react";
+import { Shield, MapPin, Navigation, AlertCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import SafetyMap from "@/components/SafetyMap";
 
 const TravelerDashboard = () => {
   return (
@@ -40,28 +41,83 @@ const TravelerDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Dashboard Features - Coming Soon */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="trust-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-accent" />
-                Live Safety Map
-              </CardTitle>
-              <CardDescription>
-                Real-time safety heatmap of your area
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                Interactive map showing safe zones, caution areas, and routes.
-              </p>
-              <Button className="w-full bg-accent hover:bg-accent-glow text-accent-foreground" disabled>
-                Coming Soon
-              </Button>
-            </CardContent>
-          </Card>
+        {/* Main Dashboard Content */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-8">
+          {/* Interactive Safety Map */}
+          <div className="lg:col-span-2">
+            <Card className="trust-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-accent" />
+                  Live Safety Map
+                </CardTitle>
+                <CardDescription>
+                  Real-time safety monitoring for Delhi region
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                <SafetyMap className="h-[400px] rounded-b-lg" />
+              </CardContent>
+            </Card>
+          </div>
 
+          {/* Safety Status & Emergency */}
+          <div className="space-y-6">
+            {/* Current Safety Status */}
+            <Card className="trust-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-safe" />
+                  Safety Status
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-3 h-3 bg-safe rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-safe">Area Safe</span>
+                </div>
+                <p className="text-xs text-muted-foreground mb-4">
+                  Current location shows normal activity levels
+                </p>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span>Last Updated:</span>
+                    <span className="text-muted-foreground">2 min ago</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Coverage:</span>
+                    <span className="text-muted-foreground">5km radius</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Emergency SOS */}
+            <Card className="trust-card border-sos/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-sos" />
+                  Emergency SOS
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Button 
+                  className="w-full h-12 bg-sos hover:bg-sos/90 text-white font-semibold text-lg safety-glow"
+                  size="lg"
+                >
+                  <Phone className="w-5 h-5 mr-2" />
+                  EMERGENCY
+                </Button>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  Instant alert to authorities & emergency contacts
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Additional Features */}
+        <div className="grid md:grid-cols-2 gap-6">
           <Card className="trust-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -85,18 +141,18 @@ const TravelerDashboard = () => {
           <Card className="trust-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-sos" />
-                Emergency SOS
+                <Shield className="w-5 h-5 text-primary" />
+                Travel Insights
               </CardTitle>
               <CardDescription>
-                Instant emergency assistance
+                Smart analytics for your journeys
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                One-tap emergency alert to nearby authorities and contacts.
+                Historical safety data and personalized travel recommendations.
               </p>
-              <Button className="w-full bg-sos hover:bg-sos/90 text-white" disabled>
+              <Button className="w-full" variant="outline" disabled>
                 Coming Soon
               </Button>
             </CardContent>
