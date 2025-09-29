@@ -22,25 +22,59 @@ const TravelerDashboard = () => {
           <Button variant="outline">Logout</Button>
         </div>
 
-        {/* Welcome Message */}
-        <Card className="trust-card mb-8">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-safe/20 rounded-full flex items-center justify-center">
-                <Shield className="w-8 h-8 text-safe" />
+        {/* Safety Status & Emergency SOS */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* Current Safety Status */}
+          <Card className="trust-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-safe" />
+                Safety Status
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-3 h-3 bg-safe rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium text-safe">Area Safe</span>
               </div>
-              <div>
-                <h2 className="text-xl font-semibold text-primary mb-2">
-                  Welcome back! Your safety is our priority.
-                </h2>
-                <p className="text-muted-foreground">
-                  Your current location is being monitored for optimal safety. 
-                  Use the features below to plan your journey.
-                </p>
+              <p className="text-xs text-muted-foreground mb-4">
+                Current location shows normal activity levels
+              </p>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between">
+                  <span>Last Updated:</span>
+                  <span className="text-muted-foreground">2 min ago</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Coverage:</span>
+                  <span className="text-muted-foreground">5km radius</span>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* Emergency SOS */}
+          <Card className="trust-card border-sos/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-sos" />
+                Emergency SOS
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                className="w-full h-12 bg-sos hover:bg-sos/90 text-white font-semibold text-lg safety-glow"
+                size="lg"
+              >
+                <Phone className="w-5 h-5 mr-2" />
+                EMERGENCY
+              </Button>
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Instant alert to authorities & emergency contacts
+              </p>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Main Dashboard Content */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
@@ -62,61 +96,9 @@ const TravelerDashboard = () => {
             </Card>
           </div>
 
-          {/* Right Sidebar - Route Finder & Safety Status */}
-          <div className="space-y-6">
-            {/* Route Finder Panel */}
+          {/* Right Sidebar - Route Finder */}
+          <div>
             <RouteFinderPanel />
-
-            {/* Current Safety Status */}
-            <Card className="trust-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-safe" />
-                  Safety Status
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-3 h-3 bg-safe rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-safe">Area Safe</span>
-                </div>
-                <p className="text-xs text-muted-foreground mb-4">
-                  Current location shows normal activity levels
-                </p>
-                <div className="space-y-2 text-xs">
-                  <div className="flex justify-between">
-                    <span>Last Updated:</span>
-                    <span className="text-muted-foreground">2 min ago</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Coverage:</span>
-                    <span className="text-muted-foreground">5km radius</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Emergency SOS */}
-            <Card className="trust-card border-sos/20">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-sos" />
-                  Emergency SOS
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  className="w-full h-12 bg-sos hover:bg-sos/90 text-white font-semibold text-lg safety-glow"
-                  size="lg"
-                >
-                  <Phone className="w-5 h-5 mr-2" />
-                  EMERGENCY
-                </Button>
-                <p className="text-xs text-muted-foreground text-center mt-2">
-                  Instant alert to authorities & emergency contacts
-                </p>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
