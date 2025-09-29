@@ -2,6 +2,7 @@ import { Shield, MapPin, Navigation, AlertCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SafetyMap from "@/components/SafetyMap";
+import RouteFinderPanel from "@/components/RouteFinderPanel";
 
 const TravelerDashboard = () => {
   return (
@@ -56,13 +57,16 @@ const TravelerDashboard = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-0">
-                <SafetyMap className="h-[400px] rounded-b-lg" />
+                <SafetyMap className="h-[500px] rounded-b-lg" />
               </CardContent>
             </Card>
           </div>
 
-          {/* Safety Status & Emergency */}
+          {/* Right Sidebar - Route Finder & Safety Status */}
           <div className="space-y-6">
+            {/* Route Finder Panel */}
+            <RouteFinderPanel />
+
             {/* Current Safety Status */}
             <Card className="trust-card">
               <CardHeader>
@@ -118,26 +122,6 @@ const TravelerDashboard = () => {
 
         {/* Additional Features */}
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="trust-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Navigation className="w-5 h-5 text-secondary" />
-                Safe Route Finder
-              </CardTitle>
-              <CardDescription>
-                AI-powered route recommendations
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                Get the safest path to your destination with real-time updates.
-              </p>
-              <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled>
-                Coming Soon
-              </Button>
-            </CardContent>
-          </Card>
-
           <Card className="trust-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
