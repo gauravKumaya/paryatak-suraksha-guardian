@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Shield, MapPin, Navigation, AlertCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,6 +6,24 @@ import SafetyMap from "@/components/SafetyMap";
 import RouteFinderPanel from "@/components/RouteFinderPanel";
 
 const TravelerDashboard = () => {
+  const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationName, setLocationName] = useState<string>("Detecting location...");
+
+  const handleLocationUpdate = (lat: number, lng: number) => {
+    setCurrentLocation({ lat, lng });
+    
+    // Reverse geocode to get location name
+    if (window.google?.maps) {
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+        if (status === 'OK' && results?.[0]) {
+          const address = results[0].formatted_address;
+          setLocationName(address);
+        }
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-6xl mx-auto">
@@ -38,12 +57,14 @@ const TravelerDashboard = () => {
                 <span className="text-sm font-medium text-safe">Area Safe</span>
               </div>
               <p className="text-xs text-muted-foreground mb-4">
-                Current location shows normal activity levels
+                {currentLocation ? locationName : "Detecting your location..."}
               </p>
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between">
-                  <span>Last Updated:</span>
-                  <span className="text-muted-foreground">2 min ago</span>
+                  <span>Location:</span>
+                  <span className="text-muted-foreground">
+                    {currentLocation ? "Live tracking active" : "Pending..."}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Coverage:</span>
@@ -91,14 +112,17 @@ const TravelerDashboard = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-0">
-                <SafetyMap className="h-[500px] rounded-b-lg" />
+                <SafetyMap 
+                  className="h-[500px] rounded-b-lg" 
+                  onLocationUpdate={handleLocationUpdate}
+                />
               </CardContent>
             </Card>
           </div>
 
           {/* Right Sidebar - Route Finder */}
           <div>
-            <RouteFinderPanel />
+            <RouteFinderPanel currentLocation={currentLocation} />
           </div>
         </div>
 
