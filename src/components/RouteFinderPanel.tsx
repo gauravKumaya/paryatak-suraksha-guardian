@@ -7,26 +7,17 @@ import { useToast } from '@/hooks/use-toast';
 
 interface RouteFinderPanelProps {
   onRouteRequest?: (source: string, destination: string) => Promise<void>;
-  currentLocation?: { lat: number; lng: number } | null;
 }
 
-const RouteFinderPanel: React.FC<RouteFinderPanelProps> = ({ onRouteRequest, currentLocation }) => {
+const RouteFinderPanel: React.FC<RouteFinderPanelProps> = ({ onRouteRequest }) => {
   const [source, setSource] = useState('Your Current Location');
   const [destination, setDestination] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [useCurrentLocation, setUseCurrentLocation] = useState(true);
   const sourceInputRef = useRef<HTMLInputElement>(null);
   const destInputRef = useRef<HTMLInputElement>(null);
   const sourceAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const destAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const { toast } = useToast();
-
-  // Update source when current location changes
-  useEffect(() => {
-    if (useCurrentLocation && currentLocation) {
-      setSource(`Current Location (${currentLocation.lat.toFixed(4)}, ${currentLocation.lng.toFixed(4)})`);
-    }
-  }, [currentLocation, useCurrentLocation]);
 
   useEffect(() => {
     const initializeAutocomplete = async () => {
@@ -50,7 +41,6 @@ const RouteFinderPanel: React.FC<RouteFinderPanelProps> = ({ onRouteRequest, cur
             const place = sourceAutocompleteRef.current?.getPlace();
             if (place?.formatted_address) {
               setSource(place.formatted_address);
-              setUseCurrentLocation(false);
             }
           });
         }
@@ -141,13 +131,9 @@ const RouteFinderPanel: React.FC<RouteFinderPanelProps> = ({ onRouteRequest, cur
             <Input
               ref={sourceInputRef}
               value={source}
-              onChange={(e) => {
-                setSource(e.target.value);
-                setUseCurrentLocation(false);
-              }}
+              onChange={(e) => setSource(e.target.value)}
               placeholder="Your Current Location"
               className="pl-10"
-              disabled={useCurrentLocation && currentLocation !== null}
             />
           </div>
         </div>

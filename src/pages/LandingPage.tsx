@@ -53,7 +53,7 @@ const LandingPage = () => {
             className="bg-accent hover:bg-accent-glow text-accent-foreground px-12 py-6 text-xl font-semibold safety-glow transition-all duration-300 hover:scale-105"
             asChild
           >
-            <Link to="/traveler-signup">Create Your Safe Profile</Link>
+            <Link to="/signup">Create Your Safe Profile</Link>
           </Button>
         </div>
       </section>
@@ -121,7 +121,7 @@ const LandingPage = () => {
               className="bg-white text-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold trust-shadow"
               asChild
             >
-              <Link to="/traveler-signup">Sign Up as Traveler</Link>
+              <Link to="/signup">Sign Up as Traveler</Link>
             </Button>
             <Button 
               size="lg"
@@ -129,7 +129,7 @@ const LandingPage = () => {
               className="border-white text-white hover:bg-white hover:text-primary px-8 py-6 text-lg font-semibold"
               asChild
             >
-              <Link to="/traveler-login">Login to Dashboard</Link>
+              <Link to="/login">Login to Dashboard</Link>
             </Button>
           </div>
         </div>

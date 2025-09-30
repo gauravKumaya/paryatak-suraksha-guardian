@@ -5,53 +5,18 @@ import { Card, CardContent } from '@/components/ui/card';
 
 interface SafetyMapProps {
   className?: string;
-  onLocationUpdate?: (lat: number, lng: number) => void;
 }
 
-const SafetyMap: React.FC<SafetyMapProps> = ({ className, onLocationUpdate }) => {
+const SafetyMap: React.FC<SafetyMapProps> = ({ className }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapError, setMapError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const userMarkerRef = useRef<google.maps.Marker | null>(null);
 
   useEffect(() => {
-    // Get user's current location
-    const getUserLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const location = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            setUserLocation(location);
-            onLocationUpdate?.(location.lat, location.lng);
-          },
-          (error) => {
-            console.warn('Geolocation error:', error);
-            // Fallback to Delhi
-            const fallback = { lat: 28.6139, lng: 77.2090 };
-            setUserLocation(fallback);
-            onLocationUpdate?.(fallback.lat, fallback.lng);
-          }
-        );
-      } else {
-        // Fallback to Delhi
-        const fallback = { lat: 28.6139, lng: 77.2090 };
-        setUserLocation(fallback);
-        onLocationUpdate?.(fallback.lat, fallback.lng);
-      }
-    };
-
-    getUserLocation();
-  }, [onLocationUpdate]);
-
-  useEffect(() => {
-    if (!userLocation) return;
-
     const initializeMap = async () => {
       try {
+        // In a real implementation, this would come from environment variables
+        // For now, we'll use a placeholder that needs to be replaced
         const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'YOUR_API_KEY_HERE';
         
         if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY_HERE') {
@@ -70,10 +35,10 @@ const SafetyMap: React.FC<SafetyMapProps> = ({ className, onLocationUpdate }) =>
         
         if (!mapRef.current) return;
 
-        // Initialize map centered on user's location
+        // Initialize map centered on Delhi
         const map = new Map(mapRef.current, {
-          center: userLocation,
-          zoom: 14,
+          center: { lat: 28.6139, lng: 77.2090 },
+          zoom: 12,
           mapTypeControl: true,
           streetViewControl: true,
           fullscreenControl: false, // Disable fullscreen to maintain dashboard layout
@@ -91,67 +56,34 @@ const SafetyMap: React.FC<SafetyMapProps> = ({ className, onLocationUpdate }) =>
           ]
         });
 
-        // Add a live marker for user's current location
-        userMarkerRef.current = new google.maps.Marker({
-          position: userLocation,
+        // Add a marker for current location (Delhi center for now)
+        const marker = new google.maps.Marker({
+          position: { lat: 28.6139, lng: 77.2090 },
           map,
-          title: 'Your Location',
+          title: 'Current Location',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            scale: 10,
-            fillColor: '#00C49F',
+            scale: 8,
+            fillColor: '#3B82F6',
             fillOpacity: 1,
             strokeColor: '#FFFFFF',
-            strokeWeight: 3
-          },
-          animation: google.maps.Animation.DROP
-        });
-
-        // Add accuracy circle
-        new google.maps.Circle({
-          strokeColor: '#00C49F',
-          strokeOpacity: 0.4,
-          strokeWeight: 2,
-          fillColor: '#00C49F',
-          fillOpacity: 0.1,
-          map,
-          center: userLocation,
-          radius: 50 // 50 meters accuracy radius
+            strokeWeight: 2
+          }
         });
 
         // Add info window
         const infoWindow = new google.maps.InfoWindow({
           content: `
             <div class="p-2">
-              <h3 class="font-semibold text-sm">Your Current Location</h3>
-              <p class="text-xs text-gray-600">Live tracking enabled</p>
+              <h3 class="font-semibold text-sm">Delhi, India</h3>
+              <p class="text-xs text-gray-600">Current monitoring area</p>
             </div>
           `
         });
 
-        userMarkerRef.current.addListener('click', () => {
-          infoWindow.open(map, userMarkerRef.current!);
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
         });
-
-        // Watch position for live updates
-        if (navigator.geolocation) {
-          navigator.geolocation.watchPosition(
-            (position) => {
-              const newLocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-              setUserLocation(newLocation);
-              onLocationUpdate?.(newLocation.lat, newLocation.lng);
-              
-              if (userMarkerRef.current) {
-                userMarkerRef.current.setPosition(newLocation);
-              }
-            },
-            (error) => console.warn('Watch position error:', error),
-            { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
-          );
-        }
 
         setIsLoading(false);
       } catch (error) {
@@ -162,7 +94,7 @@ const SafetyMap: React.FC<SafetyMapProps> = ({ className, onLocationUpdate }) =>
     };
 
     initializeMap();
-  }, [userLocation, onLocationUpdate]);
+  }, []);
 
   if (mapError) {
     return (
