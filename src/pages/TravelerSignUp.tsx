@@ -37,8 +37,13 @@ const TravelerSignUp = () => {
       photoFile
     });
     
-    // Navigate to success page
-    navigate("/signup-success");
+    toast({
+      title: "Account Created Successfully!",
+      description: "Please login to continue.",
+    });
+    
+    // Navigate to login page
+    navigate("/traveler-login");
   };
 
   return (

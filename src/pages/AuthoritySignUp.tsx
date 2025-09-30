@@ -21,8 +21,13 @@ const AuthoritySignUp = () => {
       authId: formData.get('authId')
     });
     
-    // Navigate to success page
-    navigate("/signup-success");
+    toast({
+      title: "Verification Request Submitted",
+      description: "Please login to continue after verification.",
+    });
+    
+    // Navigate to login page
+    navigate("/authority-login");
   };
 
   return (
