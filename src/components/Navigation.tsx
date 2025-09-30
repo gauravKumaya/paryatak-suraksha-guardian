@@ -30,10 +30,10 @@ const Navigation = () => {
         {/* Auth Buttons */}
         <div className="flex items-center gap-4">
           <Button variant="ghost" className="text-primary hover:text-primary-glow" asChild>
-            <Link to="/login">Login</Link>
+            <Link to="/traveler-login">Login</Link>
           </Button>
           <Button className="bg-accent hover:bg-accent-glow text-accent-foreground safety-glow" asChild>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/traveler-signup">Sign Up</Link>
           </Button>
         </div>
       </div>
