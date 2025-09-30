@@ -76,7 +76,7 @@ const FileUpload = ({ label, accept = "*/*", helperText, onFileSelect }: FileUpl
           type="file"
           accept={accept}
           onChange={handleFileSelect}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          className="hidden"
         />
         
         {selectedFile ? (

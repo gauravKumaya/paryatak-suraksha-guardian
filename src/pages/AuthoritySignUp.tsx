@@ -4,18 +4,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const AuthoritySignUp = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleAuthoritySignUp = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    
-    toast({
-      title: "Verification Request Submitted",
-      description: "Your authority credentials are being reviewed. We'll contact you within 24 hours.",
-    });
     
     console.log("Authority signup data:", {
       name: formData.get('authName'),
@@ -23,6 +20,9 @@ const AuthoritySignUp = () => {
       department: formData.get('department'),
       authId: formData.get('authId')
     });
+    
+    // Navigate to success page
+    navigate("/signup-success");
   };
 
   return (

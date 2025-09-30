@@ -12,6 +12,7 @@ import TravelerLogin from "./pages/TravelerLogin";
 import AuthorityLogin from "./pages/AuthorityLogin";
 import TravelerDashboard from "./pages/TravelerDashboard";
 import AuthorityDashboard from "./pages/AuthorityDashboard";
+import SignUpSuccess from "./pages/SignUpSuccess";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/authority-login" element={<AuthorityLogin />} />
           <Route path="/traveler-dashboard" element={<TravelerDashboard />} />
           <Route path="/authority-dashboard" element={<AuthorityDashboard />} />
+          <Route path="/signup-success" element={<SignUpSuccess />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

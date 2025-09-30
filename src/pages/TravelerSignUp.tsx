@@ -5,12 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 import FileUpload from "@/components/FileUpload";
 
 const TravelerSignUp = () => {
   const [idFile, setIdFile] = useState<File | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleTravelerSignUp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,11 +29,6 @@ const TravelerSignUp = () => {
     }
 
     // Here you would typically send the data to your backend
-    toast({
-      title: "Account Created Successfully!",
-      description: "Your identity is being verified. You'll receive a confirmation email shortly.",
-    });
-    
     console.log("Traveler signup data:", {
       name: formData.get('fullName'),
       email: formData.get('email'),
@@ -39,6 +36,9 @@ const TravelerSignUp = () => {
       idFile,
       photoFile
     });
+    
+    // Navigate to success page
+    navigate("/signup-success");
   };
 
   return (
