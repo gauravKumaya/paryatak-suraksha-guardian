@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import TravelerSignUp from "./pages/TravelerSignUp";
+import AuthoritySignUp from "./pages/AuthoritySignUp";
+import TravelerLogin from "./pages/TravelerLogin";
+import AuthorityLogin from "./pages/AuthorityLogin";
 import TravelerDashboard from "./pages/TravelerDashboard";
 import AuthorityDashboard from "./pages/AuthorityDashboard";
 import NotFound from "./pages/NotFound";
@@ -22,6 +26,10 @@ const App = () => (
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/traveler-signup" element={<TravelerSignUp />} />
+          <Route path="/authority-signup" element={<AuthoritySignUp />} />
+          <Route path="/traveler-login" element={<TravelerLogin />} />
+          <Route path="/authority-login" element={<AuthorityLogin />} />
           <Route path="/traveler-dashboard" element={<TravelerDashboard />} />
           <Route path="/authority-dashboard" element={<AuthorityDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
